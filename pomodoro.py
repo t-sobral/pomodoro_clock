@@ -4,10 +4,6 @@ import os
 import time
 
 
-def menu():
-    pass
-
-
 def length(string):  # this function returns the minutes if the input as any
     parts = string.split()
     if len(parts) > 2:
@@ -36,25 +32,46 @@ def seconds(hours, unit):  # transforms the various units of time all in seconds
         raise ValueError("Invalid unit")
 
 
-def alarm(
+def alarm_work(
     delay,
 ):  # It delays the alarm during the work time and when finished it will notify the user
     time.sleep(delay)
-    title = "work over"
-    message = "You have done your pomodoro"
+    title = "Work is Over!"
+    message = "You have completed the time. Well Done!"
     command = f'notify-send "{title}" "{message}"'
     os.system(command)
+    return True
+
+
+def alarm_break(
+    delay,
+):  # It delays the alarm during the work time and when finished it will notify the user
+    time.sleep(delay)
+    title = "Break Over!"
+    message = "You have done your Break time! Time to work!"
+    command = f'notify-send "{title}" "{message}"'
+    os.system(command)
+    return True
 
 
 def main():
     work = input("How long do you want to work? ")
-    # breaks = input("How long is the break? ")
+    breaks = input("How long is the break? ")
 
-    unit_work, pomodoro = work_units(work)
-    minute_to_second = length(work) * 60
+    while True:
+        # from here
+        unit_work, pomodoro = work_units(work)
+        minute_to_second = length(work) * 60
 
-    total_seconds = seconds(pomodoro, unit_work) + minute_to_second
-    alarm(total_seconds)
+        total_seconds = seconds(pomodoro, unit_work) + minute_to_second
+        alarm_work(total_seconds)
+        # to here the code counts the work time
+        if alarm_work:
+            unit_break, break_time = work_units(breaks)
+            minute_to_second = length(breaks) * 60
+
+            total_seconds = seconds(break_time, unit_break) + minute_to_second
+            alarm_break(total_seconds)
 
 
 main()
