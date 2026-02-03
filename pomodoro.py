@@ -1,10 +1,21 @@
 # Pomodoro Clock
 # Tomás Sobral Silva 3/2/26
+import os
 import time
 
 
 def menu():
     pass
+
+
+def length(string):  # this function returns the minutes if the input as any
+    parts = string.split()
+    if len(parts) > 2:
+        minutes = int(parts[2])
+        return minutes
+    else:
+        minutes = 0
+        return minutes
 
 
 def work_units(hours):  # returns the unit and the time inputed
@@ -25,9 +36,14 @@ def seconds(hours, unit):  # transforms the various units of time all in seconds
         raise ValueError("Invalid unit")
 
 
-def alarm(delay):
+def alarm(
+    delay,
+):  # It delays the alarm during the work time and when finished it will notify the user
     time.sleep(delay)
-    print("Time's up!")
+    title = "work over"
+    message = "You have done your pomodoro"
+    command = f'notify-send "{title}" "{message}"'
+    os.system(command)
 
 
 def main():
@@ -35,8 +51,10 @@ def main():
     # breaks = input("How long is the break? ")
 
     unit_work, pomodoro = work_units(work)
-    second = seconds(pomodoro, unit_work)
-    alarm(second)
+    minute_to_second = length(work) * 60
+
+    total_seconds = seconds(pomodoro, unit_work) + minute_to_second
+    alarm(total_seconds)
 
 
 main()
