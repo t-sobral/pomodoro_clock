@@ -4,6 +4,18 @@ import os
 import time
 
 
+def menu():
+    print("Welcome to the Pomodoro Clock!")
+    print("Set Pomodoro time ___ 1")
+    print("Exit ___ 2")
+    return True
+
+
+# def save(hour, minute):
+#     with open("Pomodoro_data.txta") as file:
+#         file.write("Date: {}; Pomodoro time{}; Total breaks{};".format())
+
+
 def length(string):  # this function returns the minutes if the input as any
     parts = string.split()
     if len(parts) > 2:
@@ -54,11 +66,25 @@ def alarm_break(
     return True
 
 
-def main():
-    work = input("How long do you want to work? ")
-    breaks = input("How long is the break? ")
+def choices(choice):
+    if choice == "1":
+        work = input("How long do you want to work? ")
+        breaks = input("How long is the break? ")
+        return work, breaks
 
-    while True:
+    elif choice == "2":
+        print("Terminating...")
+        exit(0)
+    else:
+        print("Invalid choice")
+        exit(1)
+
+
+def main():
+    menu()
+    choice = input("The choice: ")
+    work, breaks = choices(choice)
+    while choice != "2":
         # from here
         unit_work, pomodoro = work_units(work)
         minute_to_second = length(work) * 60
@@ -72,6 +98,10 @@ def main():
 
             total_seconds = seconds(break_time, unit_break) + minute_to_second
             alarm_break(total_seconds)
+            choice = input("to continue press enter. \nTo exit press 2.")
+    print("Closing...")
+
+    # fazer uma maneira para ele continuar o programa quando o usuario nao quiser continuar a contar o tempo, isto é, mostrar o total de work_time e break_time
 
 
 main()
