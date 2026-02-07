@@ -6,8 +6,8 @@ import time
 
 def menu():
     print("Welcome to the Pomodoro Clock!")
-    print("Set Pomodoro time ___ 1")
-    print("Exit ___ 2")
+    print("Set Pomodoro time --- 1")
+    print("Exit --- 2")
     return True
 
 
@@ -101,7 +101,7 @@ def main():
             choice = input("to continue press enter. \nTo exit press 2.")
     print("Closing...")
 
-    # fazer uma maneira para ele continuar o programa quando o usuario nao quiser continuar a contar o tempo, isto é, mostrar o total de work_time e break_time
+    # tentar fazer com que a pessoa possa escolher o OS que está a usar, e dependendo disso correr, varios packs que funcionam em LInux sao diferentes no windows
 
 
 main()
