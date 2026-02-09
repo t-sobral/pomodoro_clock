@@ -84,12 +84,15 @@ def main():
     menu()
     choice = input("The choice: ")
     work, breaks = choices(choice)
+    total_work = 0
+    total_break = 0
     while choice != "2":
         # from here
         unit_work, pomodoro = work_units(work)
         minute_to_second = length(work) * 60
 
         total_seconds = seconds(pomodoro, unit_work) + minute_to_second
+        total_work += total_seconds
         alarm_work(total_seconds)
         # to here the code counts the work time
         if alarm_work:
@@ -98,10 +101,13 @@ def main():
 
             total_seconds = seconds(break_time, unit_break) + minute_to_second
             alarm_break(total_seconds)
-            choice = input("to continue press enter. \nTo exit press 2.")
+            total_break += total_seconds  # this works
+            choice = input("to continue press enter; \nTo exit press 2: ")
+    print("------------")
+    print("Total work time: {} {}".format(total_work, unit_work))
+    print("Total break time: {} {}".format(total_break, unit_break))
+    print("------------")
     print("Closing...")
-
-    # tentar fazer com que a pessoa possa escolher o OS que está a usar, e dependendo disso correr, varios packs que funcionam em LInux sao diferentes no windows
 
 
 main()
