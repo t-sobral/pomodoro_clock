@@ -102,7 +102,7 @@ def main():
             total_seconds = seconds(break_time, unit_break) + minute_to_second
             alarm_break(total_seconds)
             total_break += total_seconds  # this works
-            choice = input("to continue press enter; \nTo exit press 2: ")
+            choice = input("To continue press enter; \nTo exit press 2: ")
     print("------------")
     print("Total work time: {} {}".format(total_work, unit_work))
     print("Total break time: {} {}".format(total_break, unit_break))
