@@ -8,7 +8,27 @@ def menu():
     print("Welcome to the Pomodoro Clock!")
     print("Set Pomodoro time --- 1")
     print("Exit --- 2")
-    return True
+
+def the_brains(data, alarm_function):
+    unit, time_passed = work_units(data)
+    minute_to_second = length(data) * 60
+    total_seconds = seconds(time_passed, unit) + minute_to_second
+    alarm_function(total_seconds)  
+    return total_seconds
+
+
+def hour(time_seconds):
+    if time_seconds >= 3600:
+        hour = time_seconds // 3600
+        minutes = time_seconds % 3600 // 60
+        seconds = time_seconds % 3600 % 60
+    else:
+        hour = 0
+        minutes = time_seconds // 60
+        seconds = time_seconds % 60
+        
+    return hour, minutes, seconds
+
 
 
 # def save(hour, minute):
@@ -87,25 +107,22 @@ def main():
     total_work = 0
     total_break = 0
     while choice != "2":
-        # from here
-        unit_work, pomodoro = work_units(work)
-        minute_to_second = length(work) * 60
-
-        total_seconds = seconds(pomodoro, unit_work) + minute_to_second
-        total_work += total_seconds
-        alarm_work(total_seconds)
-        # to here the code counts the work time
-        if alarm_work:
-            unit_break, break_time = work_units(breaks)
-            minute_to_second = length(breaks) * 60
-
-            total_seconds = seconds(break_time, unit_break) + minute_to_second
-            alarm_break(total_seconds)
-            total_break += total_seconds  # this works
-            choice = input("To continue press enter; \nTo exit press 2: ")
+        work_time= the_brains(work, alarm_work)
+        total_work += work_time
+        
+        break_time = the_brains(breaks, alarm_break)
+        total_break += break_time
+        choice = input("To continue press enter; \nTo exit press 2: ")
+    
+    
+    work_hour, work_minutes, work_seconds = hour(total_work)
+    break_hour, break_minutes, break_seconds = hour(total_break) 
+    
+    
+    
     print("------------")
-    print("Total work time: {} {}".format(total_work, unit_work))
-    print("Total break time: {} {}".format(total_break, unit_break))
+    print("Total work time: {} hours, {} minutes, and {} seconds".format(work_hour, work_minutes, work_seconds))
+    print("Total break time: {} hours, {} minutes, and {} seconds".format(break_hour, break_minutes, break_seconds))
     print("------------")
     print("Closing...")
     #teste
