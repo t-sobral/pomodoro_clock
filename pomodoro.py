@@ -31,9 +31,11 @@ def hour(time_seconds):
 
 
 
-# def save(hour, minute):
-#     with open("Pomodoro_data.txta") as file:
-#         file.write("Date: {}; Pomodoro time{}; Total breaks{};".format())
+def save(hour_work, minute_work, second_work, hour_break, minute_break, second_break):
+     with open("Pomodoro_data.txt", "a") as file:
+        file.write("Pomodoro data:\n")
+        file.write(f"Work time: {hour_work} hours, {minute_work} minutes, and {second_work} seconds\n")
+        file.write(f"Break time: {hour_break} hours, {minute_break} minutes, and {second_break} seconds\n")
 
 
 def length(string):  # this function returns the minutes if the input as any
@@ -119,7 +121,9 @@ def main():
     break_hour, break_minutes, break_seconds = hour(total_break) 
     
     
-    
+    print("------------")
+    print("Saving Data...")
+    save(work_hour, work_minutes, work_seconds, break_hour, break_minutes, break_seconds)
     print("------------")
     print("Total work time: {} hours, {} minutes, and {} seconds".format(work_hour, work_minutes, work_seconds))
     print("Total break time: {} hours, {} minutes, and {} seconds".format(break_hour, break_minutes, break_seconds))
